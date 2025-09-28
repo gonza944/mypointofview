@@ -1,26 +1,301 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Space+Grotesk:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
+@import "tw-animate-css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Light theme colors */
+  --background-light: oklch(0.976 0.0143 57.5926);
+  --foreground-light: oklch(0.3438 0.0269 95.7226);
+  --card-light: oklch(0.976 0.0143 57.5926);
+  --card-foreground-light: oklch(0.3438 0.0269 95.7226);
+  --popover-light: oklch(1 0 0);
+  --popover-foreground-light: oklch(0.2724 0.0247 82.6449);
+  --primary-light: oklch(0.6375 0.0877 35.9752);
+  --primary-foreground-light: oklch(0.976 0.0143 57.5926);
+  --secondary-light: oklch(0.3438 0.0269 95.7226);
+  --secondary-foreground-light: oklch(0.976 0.0143 57.5926);
+  --muted-light: oklch(0.9301 0.0173 67.6131);
+  --muted-foreground-light: oklch(0.5287 0.0193 88.0632);
+  --accent-light: oklch(0.7204 0.0084 139.4409);
+  --accent-foreground-light: oklch(0.976 0.0143 57.5926);
+  --destructive-light: oklch(0.5771 0.2152 27.325);
+  --destructive-foreground-light: oklch(1 0 0);
+  --border-light: oklch(0.88 0.0268 61.967);
+  --input-light: oklch(0.9144 0.0195 72.5639);
+  --ring-light: oklch(0.6375 0.0877 35.9752);
+  --chart-1-light: oklch(0.6375 0.0877 35.9752);
+  --chart-2-light: oklch(0.7204 0.0084 139.4409);
+  --chart-3-light: oklch(0.7655 0.0618 50.0346);
+  --chart-4-light: oklch(0.6465 0.0144 130.8595);
+  --chart-5-light: oklch(0.5748 0.0717 43.6209);
+  --sidebar-light: oklch(0.9512 0.0172 67.6191);
+  --sidebar-foreground-light: oklch(0.3438 0.0269 95.7226);
+  --sidebar-primary-light: oklch(0.6375 0.0877 35.9752);
+  --sidebar-primary-foreground-light: oklch(0.976 0.0143 57.5926);
+  --sidebar-accent-light: oklch(0.9205 0.0195 72.5655);
+  --sidebar-accent-foreground-light: oklch(0.3438 0.0269 95.7226);
+  --sidebar-border-light: oklch(0.903 0.0202 69.978);
+  --sidebar-ring-light: oklch(0.6375 0.0877 35.9752);
+
+  /* Dark theme colors */
+  --background-dark: oklch(0.2724 0.0247 82.6449);
+  --foreground-dark: oklch(0.9301 0.0173 67.6131);
+  --card-dark: oklch(0.2724 0.0247 82.6449);
+  --card-foreground-dark: oklch(0.9512 0.0172 67.6191);
+  --popover-dark: oklch(0.3438 0.0269 95.7226);
+  --popover-foreground-dark: oklch(0.9205 0.0195 72.5655);
+  --primary-dark: oklch(0.7655 0.0618 50.0346);
+  --primary-foreground-dark: oklch(0.2724 0.0247 82.6449);
+  --secondary-dark: oklch(0.9512 0.0172 67.6191);
+  --secondary-foreground-dark: oklch(0.3438 0.0269 95.7226);
+  --muted-dark: oklch(0.2201 0.0214 86.2004);
+  --muted-foreground-dark: oklch(0.6804 0.0253 69.4495);
+  --accent-dark: oklch(0.5287 0.0193 88.0632);
+  --accent-foreground-dark: oklch(0.9512 0.0172 67.6191);
+  --destructive-dark: oklch(0.6368 0.2078 25.3313);
+  --destructive-foreground-dark: oklch(1 0 0);
+  --border-dark: oklch(0.3919 0.0192 86.4637);
+  --input-dark: oklch(0.4216 0.0188 86.4664);
+  --ring-dark: oklch(0.7655 0.0618 50.0346);
+  --chart-1-dark: oklch(0.7655 0.0618 50.0346);
+  --chart-2-dark: oklch(0.6465 0.0144 130.8595);
+  --chart-3-dark: oklch(0.6375 0.0877 35.9752);
+  --chart-4-dark: oklch(0.7204 0.0084 139.4409);
+  --chart-5-dark: oklch(0.838 0.0559 59.7937);
+  --sidebar-dark: oklch(0.2201 0.0214 86.2004);
+  --sidebar-foreground-dark: oklch(0.9301 0.0173 67.6131);
+  --sidebar-primary-dark: oklch(0.3438 0.0269 95.7226);
+  --sidebar-primary-foreground-dark: oklch(0.9512 0.0172 67.6191);
+  --sidebar-accent-dark: oklch(0.2439 0.0223 78.6674);
+  --sidebar-accent-foreground-dark: oklch(0.9301 0.0173 67.6131);
+  --sidebar-border-dark: oklch(0.3387 0.0247 87.5273);
+  --sidebar-ring-dark: oklch(0.5707 0.0526 72.6712);
+
+  /* Default to light theme */
+  --background: var(--background-light);
+  --foreground: var(--foreground-light);
+  --card: var(--card-light);
+  --card-foreground: var(--card-foreground-light);
+  --popover: var(--popover-light);
+  --popover-foreground: var(--popover-foreground-light);
+  --primary: var(--primary-light);
+  --primary-foreground: var(--primary-foreground-light);
+  --secondary: var(--secondary-light);
+  --secondary-foreground: var(--secondary-foreground-light);
+  --muted: var(--muted-light);
+  --muted-foreground: var(--muted-foreground-light);
+  --accent: var(--accent-light);
+  --accent-foreground: var(--accent-foreground-light);
+  --destructive: var(--destructive-light);
+  --destructive-foreground: var(--destructive-foreground-light);
+  --border: var(--border-light);
+  --input: var(--input-light);
+  --ring: var(--ring-light);
+  --chart-1: var(--chart-1-light);
+  --chart-2: var(--chart-2-light);
+  --chart-3: var(--chart-3-light);
+  --chart-4: var(--chart-4-light);
+  --chart-5: var(--chart-5-light);
+  --sidebar: var(--sidebar-light);
+  --sidebar-foreground: var(--sidebar-foreground-light);
+  --sidebar-primary: var(--sidebar-primary-light);
+  --sidebar-primary-foreground: var(--sidebar-primary-foreground-light);
+  --sidebar-accent: var(--sidebar-accent-light);
+  --sidebar-accent-foreground: var(--sidebar-accent-foreground-light);
+  --sidebar-border: var(--sidebar-border-light);
+  --sidebar-ring: var(--sidebar-ring-light);
+
+  /* Font families */
+  --font-sans: "Work Sans", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-header: "Space Grotesk", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont;
+
+  /* Other properties */
+  --radius: 0rem;
+  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
+    0 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
+    0 2px 4px -1px hsl(0 0% 0% / 0.1);
+  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
+    0 4px 6px -1px hsl(0 0% 0% / 0.1);
+  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
+    0 8px 10px -1px hsl(0 0% 0% / 0.1);
+  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: var(--background-dark);
+    --foreground: var(--foreground-dark);
+    --card: var(--card-dark);
+    --card-foreground: var(--card-foreground-dark);
+    --popover: var(--popover-dark);
+    --popover-foreground: var(--popover-foreground-dark);
+    --primary: var(--primary-dark);
+    --primary-foreground: var(--primary-foreground-dark);
+    --secondary: var(--secondary-dark);
+    --secondary-foreground: var(--secondary-foreground-dark);
+    --muted: var(--muted-dark);
+    --muted-foreground: var(--muted-foreground-dark);
+    --accent: var(--accent-dark);
+    --accent-foreground: var(--accent-foreground-dark);
+    --destructive: var(--destructive-dark);
+    --destructive-foreground: var(--destructive-foreground-dark);
+    --border: var(--border-dark);
+    --input: var(--input-dark);
+    --ring: var(--ring-dark);
+    --chart-1: var(--chart-1-dark);
+    --chart-2: var(--chart-2-dark);
+    --chart-3: var(--chart-3-dark);
+    --chart-4: var(--chart-4-dark);
+    --chart-5: var(--chart-5-dark);
+    --sidebar: var(--sidebar-dark);
+    --sidebar-foreground: var(--sidebar-foreground-dark);
+    --sidebar-primary: var(--sidebar-primary-dark);
+    --sidebar-primary-foreground: var(--sidebar-primary-foreground-dark);
+    --sidebar-accent: var(--sidebar-accent-dark);
+    --sidebar-accent-foreground: var(--sidebar-accent-foreground-dark);
+    --sidebar-border: var(--sidebar-border-dark);
+    --sidebar-ring: var(--sidebar-ring-dark);
+  }
+}
+
+.dark {
+  --background: var(--background-dark);
+  --foreground: var(--foreground-dark);
+  --card: var(--card-dark);
+  --card-foreground: var(--card-foreground-dark);
+  --popover: var(--popover-dark);
+  --popover-foreground: var(--popover-foreground-dark);
+  --primary: var(--primary-dark);
+  --primary-foreground: var(--primary-foreground-dark);
+  --secondary: var(--secondary-dark);
+  --secondary-foreground: var(--secondary-foreground-dark);
+  --muted: var(--muted-dark);
+  --muted-foreground: var(--muted-foreground-dark);
+  --accent: var(--accent-dark);
+  --accent-foreground: var(--accent-foreground-dark);
+  --destructive: var(--destructive-dark);
+  --destructive-foreground: var(--destructive-foreground-dark);
+  --border: var(--border-dark);
+  --input: var(--input-dark);
+  --ring: var(--ring-dark);
+  --chart-1: var(--chart-1-dark);
+  --chart-2: var(--chart-2-dark);
+  --chart-3: var(--chart-3-dark);
+  --chart-4: var(--chart-4-dark);
+  --chart-5: var(--chart-5-dark);
+  --sidebar: var(--sidebar-dark);
+  --sidebar-foreground: var(--sidebar-foreground-dark);
+  --sidebar-primary: var(--sidebar-primary-dark);
+  --sidebar-primary-foreground: var(--sidebar-primary-foreground-dark);
+  --sidebar-accent: var(--sidebar-accent-dark);
+  --sidebar-accent-foreground: var(--sidebar-accent-foreground-dark);
+  --sidebar-border: var(--sidebar-border-dark);
+  --sidebar-ring: var(--sidebar-ring-dark);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+  --font-header: var(--font-header);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --shadow-2xs: var(--shadow-2xs);
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow: var(--shadow);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/*
+ * Custom CSS animations for the LinearLoop marquee component
+ * 
+ * The marquee animation creates a smooth, infinite scrolling effect by:
+ * 1. Starting with the content at its normal position (translateX(0))
+ * 2. Moving the content to the left by 50% of its width (translateX(-50%))
+ * 3. Since we duplicate the content, moving by 50% creates a seamless loop
+ * 4. The animation is linear (constant speed) and infinite (loops forever)
+ */
+@keyframes marquee {
+  /* Starting position - content is at normal position */
+  0% {
+    transform: translateX(0);
+  }
+  /* End position - content has moved left by half its width */
+  100% {
+    transform: translateX(-50%);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/*
+ * Utility class to apply the marquee animation
+ * - Uses the @keyframes marquee defined above
+ * - Linear timing function ensures constant speed
+ * - Infinite iteration count creates continuous loop
+ * - Animation duration is set dynamically via inline styles
+ */
+.animate-marquee {
+  animation: marquee linear infinite;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
