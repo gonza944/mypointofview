@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <div className="absolute top-0 left-0 h-[100dvh] w-[100dvw] overflow-hidden z-[-1]">
+        <div className="absolute top-0 left-0 h-full w-full md:h-[100dvh] md:w-[100dvw] z-[-1] overflow-hidden">
           <Noise
             patternSize={100}
             patternScaleX={1}
