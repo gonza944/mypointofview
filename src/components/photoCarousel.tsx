@@ -236,7 +236,7 @@ export const ImageSwiper: React.FC<ImageSwiperProps> = ({
         return (
           <article
             key={card.id}
-            className="image-card absolute cursor-pointer
+            className="image-card absolute cursor-(--drag-cursor)
                          place-self-center border
                          shadow-lg overflow-hidden will-change-transform bg-slate-800"
             style={

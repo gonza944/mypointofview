@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import GooeyNav from "@/components/GooeyNav";
+import Noise from "@/components/Noise";
 
 export const metadata: Metadata = {
   title: "My Point Of View",
@@ -20,8 +21,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`antialiased bg-background bg-[url(https://grainy-gradients.vercel.app/noise.svg)]`}>
+      <body className={`antialiased`}>
+        <div className="absolute top-0 left-0 h-[100dvh] w-[100dvw] overflow-hidden z-[-1]">
+          <Noise
+            patternSize={100}
+            patternScaleX={1}
+            patternScaleY={1}
+            patternRefreshInterval={2}
+            patternAlpha={25}
+          />
+        </div>
         {children}
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2">
           <GooeyNav
