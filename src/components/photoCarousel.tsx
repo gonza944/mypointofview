@@ -34,8 +34,18 @@ export const ImageSwiper: React.FC<ImageSwiperProps> = ({
     width: 256,
     height: 352,
   });
+  
+  // Calculate offset per card (works for any number of cards)
+  const offsetPerCard = 8;
+  const maxOffset = (cards.length - 3) * offsetPerCard;
+  
+  // Container dimensions
   const containerWidth = useFill ? actualDimensions.width : cardWidth || 256;
   const containerHeight = useFill ? actualDimensions.height : cardHeight || 352;
+  
+  // Card dimensions (smaller to accommodate the offset)
+  const actualCardWidth = containerWidth - maxOffset;
+  const actualCardHeight = containerHeight - maxOffset;
 
   // --- STATE AND REFS ---
   const cardStackRef = useRef<HTMLDivElement>(null);
@@ -57,21 +67,26 @@ export const ImageSwiper: React.FC<ImageSwiperProps> = ({
     return Array.from(cardStackRef.current.querySelectorAll(".image-card"));
   }, []);
 
-  // Gets the topmost card element.
+  // Gets the topmost card element (the one with visual index 0).
   const getActiveCard = useCallback((): HTMLElement | null => {
-    return getCards()[0] || null;
-  }, [getCards]);
+    if (!cardStackRef.current) return null;
+    return cardStackRef.current.querySelector('[data-visual-index="0"]');
+  }, []);
 
   // Updates CSS custom properties for all cards to position them in a stack.
   const updateCardPositions = useCallback(() => {
-    getCards().forEach((card, i) => {
-      card.style.setProperty("--i", i.toString());
+    const cardElements = getCards();
+    cardElements.forEach((card) => {
+      // Get the data-index attribute to know the visual position
+      const visualIndex = parseInt(card.getAttribute("data-visual-index") || "0");
       card.style.setProperty("--swipe-x", "0px");
       card.style.setProperty("--swipe-rotate", "0deg");
+      card.style.setProperty("--stack-offset-x", `${visualIndex * offsetPerCard - maxOffset / 2}px`);
+      card.style.setProperty("--stack-scale", (1 - visualIndex * 0.02).toString());
       card.style.opacity = "1";
       card.style.transition = "transform 0.5s ease, opacity 0.5s ease";
     });
-  }, [getCards]);
+  }, [getCards, offsetPerCard, maxOffset]);
 
   // Applies instantaneous swipe styles to the active card during a drag.
   const applySwipeStyles = useCallback(
@@ -79,12 +94,12 @@ export const ImageSwiper: React.FC<ImageSwiperProps> = ({
       const card = getActiveCard();
       if (!card) return;
       const rotation = deltaX * 0.1; // Rotation based on horizontal movement
-      const opacity = 1 - Math.abs(deltaX) / (containerWidth * 1.5); // Fade out as it moves
+      const opacity = 1 - Math.abs(deltaX) / (actualCardWidth * 1.5); // Fade out as it moves
       card.style.setProperty("--swipe-x", `${deltaX}px`);
       card.style.setProperty("--swipe-rotate", `${rotation}deg`);
       card.style.opacity = opacity.toString();
     },
-    [getActiveCard, containerWidth]
+    [getActiveCard, actualCardWidth]
   );
 
   // --- INTERACTION HANDLERS (MEMOIZED) ---
@@ -133,7 +148,7 @@ export const ImageSwiper: React.FC<ImageSwiperProps> = ({
     }
 
     const deltaX = currentX.current - startX.current;
-    const threshold = containerWidth / 3; // Swipe threshold is 1/3 of the card's width
+    const threshold = actualCardWidth / 3; // Swipe threshold is 1/3 of the card's width
     const card = getActiveCard();
     if (!card) return;
 
@@ -143,7 +158,7 @@ export const ImageSwiper: React.FC<ImageSwiperProps> = ({
     if (Math.abs(deltaX) > threshold) {
       // --- SWIPE AWAY ---
       const direction = Math.sign(deltaX);
-      const swipeOutX = direction * (containerWidth * 1.5);
+      const swipeOutX = direction * (actualCardWidth * 1.5);
       card.style.setProperty("--swipe-x", `${swipeOutX}px`);
       card.style.setProperty("--swipe-rotate", `${direction * 15}deg`);
       card.style.opacity = "0";
@@ -156,7 +171,7 @@ export const ImageSwiper: React.FC<ImageSwiperProps> = ({
       // --- SNAP BACK ---
       applySwipeStyles(0); // Resets to initial state with animation
     }
-  }, [getActiveCard, applySwipeStyles, containerWidth]);
+  }, [getActiveCard, applySwipeStyles, actualCardWidth]);
 
   // --- LIFECYCLE HOOKS ---
 
@@ -222,7 +237,7 @@ export const ImageSwiper: React.FC<ImageSwiperProps> = ({
   return (
     <section
       ref={cardStackRef}
-      className={`relative grid place-content-center select-none ${className}`}
+      className={`relative select-none overflow-hidden ${className}`}
       style={
         {
           width: useFill ? "100%" : containerWidth,
@@ -236,21 +251,24 @@ export const ImageSwiper: React.FC<ImageSwiperProps> = ({
         return (
           <article
             key={card.id}
+            data-visual-index={displayIndex}
             className="image-card absolute cursor-(--drag-cursor)
-                         place-self-center border
-                         shadow-lg overflow-hidden will-change-transform bg-slate-800"
+                         border rounded-lg
+                         shadow-lg overflow-hidden will-change-transform bg-muted"
             style={
               {
-                "--i": displayIndex.toString(), // The card's current position in the stack (0 = top)
-                "--swipe-x": "0px", // Managed by JS for horizontal swipe
-                "--swipe-rotate": "0deg", // Managed by JS for rotation
-                width: containerWidth,
-                height: containerHeight,
+                width: actualCardWidth,
+                height: actualCardHeight,
+                left: "50%",
+                top: "50%",
                 zIndex: cards.length - displayIndex,
+                transformOrigin: "center center",
                 transform: `
-                translateZ(calc(var(--i) * -45px))
-                translateX(var(--swipe-x))
-                rotate(var(--swipe-rotate))
+                translate(-50%, -50%)
+                translateX(calc(var(--swipe-x, 0px) + var(--stack-offset-x, ${displayIndex * offsetPerCard - maxOffset / 2}px)))
+                translateY(var(--stack-offset-y, ${displayIndex * offsetPerCard - maxOffset / 2}px))
+                scale(var(--stack-scale, ${1 - displayIndex * 0.02}))
+                rotate(var(--swipe-rotate, 0deg))
               `,
               } as React.CSSProperties
             }>
@@ -271,8 +289,8 @@ export const ImageSwiper: React.FC<ImageSwiperProps> = ({
               <Image
                 src={card.imageUrl}
                 alt={card.title}
-                width={containerWidth}
-                height={containerHeight}
+                width={actualCardWidth}
+                height={actualCardHeight}
                 className="w-full h-full object-cover pointer-events-none"
                 quality={100}
                 draggable={false}
@@ -281,8 +299,8 @@ export const ImageSwiper: React.FC<ImageSwiperProps> = ({
               />
             )}
             {showTitle && (
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                <h3 className="font-bold text-xl text-white drop-shadow-lg">
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background to-transparent">
+                <h3 className="font-bold text-xl text-muted-foreground drop-shadow-lg">
                   {card.title}
                 </h3>
               </div>
