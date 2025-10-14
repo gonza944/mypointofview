@@ -203,7 +203,7 @@ export const RevealAnimation: React.FC<RevealAnimationProps> = ({
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div
               ref={counterRef}
-              className="font-header font-extrabold text-primary text-[20vh] md:text-[25vh] lg:text-[30vh] tracking-tighter leading-none"
+              className="font-header font-extrabold text-primary dark:text-primary-dark text-[20vh] md:text-[25vh] lg:text-[30vh] tracking-tighter leading-none"
               style={{ 
                 opacity: 0,
                 textShadow: "0 1px 0 rgba(0,0,0,0.1), 0 2px 0 rgba(0,0,0,0.1), 0 3px 0 rgba(0,0,0,0.1), 0 4px 0 rgba(0,0,0,0.1), 0 5px 10px rgba(0,0,0,0.2), 0 0 40px rgba(0,0,0,0.15)"
@@ -217,7 +217,7 @@ export const RevealAnimation: React.FC<RevealAnimationProps> = ({
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div
               ref={helloRef}
-              className="font-header font-extrabold text-primary text-[15vh] md:text-[18vh] lg:text-[22vh] tracking-tighter leading-none"
+              className="font-header font-extrabold text-primary dark:text-primary-dark text-[15vh] md:text-[18vh] lg:text-[22vh] tracking-tighter leading-none"
               style={{ 
                 opacity: 0, 
                 display: "none",
