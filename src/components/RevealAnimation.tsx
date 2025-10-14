@@ -186,7 +186,7 @@ export const RevealAnimation: React.FC<RevealAnimationProps> = ({
           {/* Left panel */}
           <div
             ref={leftPanelRef}
-            className="absolute top-0 left-0 w-1/2 h-full bg-foreground flex items-center justify-end pr-0.5"
+            className="absolute top-0 left-0 w-1/2 h-full bg-foreground flex items-center justify-end"
           >
             <Noise patternAlpha={15} patternRefreshInterval={2} />
           </div>
@@ -194,7 +194,7 @@ export const RevealAnimation: React.FC<RevealAnimationProps> = ({
           {/* Right panel */}
           <div
             ref={rightPanelRef}
-            className="absolute top-0 right-0 w-1/2 h-full bg-foreground flex items-center justify-start pl-0.5"
+            className="absolute top-0 right-0 w-1/2 h-full bg-foreground flex items-center justify-start"
           >
             <Noise patternAlpha={15} patternRefreshInterval={2} />
           </div>
