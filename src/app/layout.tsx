@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import GooeyNav from "@/components/GooeyNav";
+import GooeyNav from "@/components/navBar/GooeyNav";
 import Noise from "@/components/Noise";
 
 export const metadata: Metadata = {
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 };
 
 const items = [
-  { label: "Home", href: "#" },
-  { label: "Work", href: "#" },
+  { label: "Home", href: "/home" },
+  { label: "Work", href: "/work" },
   { label: "About", href: "#" },
 ];
 
